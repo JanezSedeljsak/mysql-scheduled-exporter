@@ -14,7 +14,7 @@ if [ -n "$EXPORT_DB_CONTAINER" ]; then
     mysqldump --host=$EXPORT_DB_CONTAINER --databases $EXPORTER_MYSQL_DATABASE -u $EXPORTER_MYSQL_USER -p$EXPORTER_MYSQL_PASSWORD > "/exporter/raw/$export_filename"
     echo "[1] Database exported successfully."
 
-    openssl aes-256-cbc -a -salt -k "$ENCRYPTION_SALT$(basename "$export_filename" .sql)" -in "/exporter/raw/$export_filename" -out "/exporter/data/$export_filename.enc"
+    openssl aes-256-cbc -a -salt -k "$EXPORT_ENCRYPTION_SALT$(basename "$export_filename" .sql)" -in "/exporter/raw/$export_filename" -out "/exporter/data/$export_filename.enc"
     echo "[2] DB file encoded successfully ($EXPORT_DIRECTORY$export_filename.enc)."
     
     rm "/exporter/raw/$export_filename"

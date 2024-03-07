@@ -15,5 +15,5 @@ fi
 encrypted_filename="$1"
 output_path="$2"
 output_filename="$(basename "$encrypted_filename" .enc)"
-openssl aes-256-cbc -d -a -k "$ENCRYPTION_SALT$(basename "$output_filename" .sql)" -in "$encrypted_filename" -out "$output_path$output_filename"
+openssl aes-256-cbc -d -a -k "$EXPORT_ENCRYPTION_SALT$(basename "$output_filename" .sql)" -in "$encrypted_filename" -out "$output_path$output_filename"
 echo "Decryption completed. Output filename: $output_filename"
