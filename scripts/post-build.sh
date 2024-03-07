@@ -19,7 +19,7 @@ fi
 # Check if the container is already connected to the network
 docker inspect -f "{{.NetworkSettings.Networks.${network_name}}}" ${EXPORT_DB_CONTAINER}
 conn_status=$?
-if [ "${conn_status}" == "1" ]; then
+if [ "${conn_status}" == "0" ]; then
     echo "Container is already connected to network '${network_name}'."
     exit 0
 else
