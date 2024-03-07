@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  exporter:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    networks:
+      - default
+      - DBExporterNetwork
+    env_file:
+      - .env
+    volumes:
+      - ${EXPORT_DIRECTORY}:/exporter/data
+
+networks:
+  DBExporterNetwork:
+    external: false
