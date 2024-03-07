@@ -34,10 +34,10 @@ chmod +x post-build.sh
 
 ### Decoding files
 
-If you want to decode the exported files you simply run:
+If you want to decrypt the exported files you simply run:
 
 ```bash
 cd scripts
-chmod +x decode.sh
-./decode.sh <encrypted_filename> <output_path>
+chmod +x decrypt.sh
+./decrypt.sh <encrypted_filename> <output_path>
 ```

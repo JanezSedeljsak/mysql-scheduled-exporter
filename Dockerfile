@@ -9,10 +9,7 @@ RUN apt-get update && \
     && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir /exporter
-RUN mkdir /exporter/data
-RUN mkdir /exporter/scripts
-RUN mkdir /exporter/raw
-RUN mkdir /exporter/logs
+RUN mkdir -p /exporter/data /exporter/scripts /exporter/raw /exporter/logs
 
 COPY ./scripts/run.sh /exporter/scripts/run.sh
 COPY .env /exporter/.env
