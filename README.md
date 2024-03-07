@@ -32,7 +32,7 @@ chmod +x post-build.sh
 ./post-build.sh
 ```
 
-### Decoding files
+### Decrypting files
 
 If you want to decrypt the exported files you simply run:
 
