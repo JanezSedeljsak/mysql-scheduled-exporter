@@ -1,1 +1,1 @@
-* * * * * /bin/sh /exporter/export.sh >> /exporter/logs/exporter.log 2>&1
+0 3 * * 0 /bin/sh /exporter/export.sh >> /exporter/logs/exporter.log 2>&1
