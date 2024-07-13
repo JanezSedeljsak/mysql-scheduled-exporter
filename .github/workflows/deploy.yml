@@ -20,6 +20,6 @@ jobs:
       - name: Build and push Frontend image to registry
         uses: docker/build-push-action@v5
         with:
-          context: ./app
+          context: .
           push: true
           tags: janezs12/mysql-scheduled-exporter:latest
