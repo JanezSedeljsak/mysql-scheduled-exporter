@@ -26,6 +26,8 @@ if [ "$diffs" -gt 4 ]; then
     exit 1
 else
     echo "DB export was successfully exported, encoded, zipped, and then reverted to the raw SQL."
+    echo "Actual diffs between the 2 files:"
+    diff $raw_dump $decoded
 fi
 
 crond -f -d 8 &
