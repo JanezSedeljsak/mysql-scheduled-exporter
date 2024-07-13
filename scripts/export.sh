@@ -13,7 +13,7 @@ echo "[DB-EXPORTER] Will try to create a ${EXPORT_FILENAME}"
 mysqldump --host=$DB_HOST --databases $DB_NAME -u $DB_USER -p$DB_PASSWORD > "${SQL_FILE}"
 echo "[DB-EXPORTER-$(date -u +"%Y%m%d%H%M")] 1. Database exported successfully."
 
-openssl aes-256-cbc -a -salt -k "${SALT}${EXPORT_FILENAME}" -in "${SQL_FILE}" -out "${SQL_ENC_FILE}"
+openssl aes-256-cbc -a -salt -pbkdf2 -iter 10000 -k "${SALT}${EXPORT_FILENAME}" -in "${SQL_FILE}" -out "${SQL_ENC_FILE}"
 echo "[DB-EXPORTER-$(date -u +"%Y%m%d%H%M")] 2. Compressed successfully (${SQL_ENC_FILE})"
 
 zstd -z -q "${SQL_ENC_FILE}" -o "${SQL_ENC_ZSTD_FILE}"

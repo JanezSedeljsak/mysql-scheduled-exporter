@@ -35,10 +35,10 @@ services:
       - db
 ```
 
-The `schedule.cron` file should mostly stay the same, the only difference should be the schedule you set. The example below is scheduled to run every Sunday at 3am (this is also the default config).
+The `schedule.cron` file should mostly stay the same, the only difference should be the schedule you set. The example below is scheduled to run every Sunday at 0:30am (this is also the default config).
 
 ```
-0 3 * * 0 /bin/sh /exporter/export.sh >> /exporter/logs/exporter.log 2>&1
+30 0 * * 0 /bin/sh /exporter/export.sh >> /exporter/logs/exporter.log 2>&1
 
 ```
 
