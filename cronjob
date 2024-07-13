@@ -1,3 +1,0 @@
-*/10 * * * * root /exporter/scripts/run.sh > /exporter/logs/$(date "+\%Y\%m\%d_\%H\%M\%S").log
-# job below is just a test job (remove the '#' and the exporter should create txt fiels each minute)
-# * * * * * root date "+\%Y\%m\%d_\%H\%M\%S" > /exporter/data/output_$(date "+\%Y\%m\%d_\%H\%M\%S").txt

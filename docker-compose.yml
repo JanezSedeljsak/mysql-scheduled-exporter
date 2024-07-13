@@ -1,18 +1,41 @@
-version: '3'
-
 services:
+  db:
+    image: 'mariadb:10-focal'
+    environment:
+        - MYSQL_ROOT_PASSWORD=test
+
+  phpmyadmin:
+    image: phpmyadmin
+    environment:
+      - PMA_HOST=db
+      - PMA_USER=root
+      - PMA_PASSWORD=test
+    ports:
+      - "8081:80"
+    depends_on:
+      - db
+
+  uptime-kuzma:
+    image: louislam/uptime-kuma
+    ports:
+      - "3001:3001"
+    depends_on:
+      - db
+      - exporter
+
   exporter:
     build:
       context: .
       dockerfile: Dockerfile
-    networks:
-      - default
-      - DBExporterNetwork
-    env_file:
-      - .env
+    environment:
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASSWORD=test
+      - DB_NAME=sys
+      - SALT=salt
     volumes:
-      - ${EXPORT_DIRECTORY}:/exporter/data
-
-networks:
-  DBExporterNetwork:
-    external: false
+      - /home/exports/:/exporter/data/
+    ports:
+      - "5050:80"
+    depends_on:
+      - db

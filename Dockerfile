@@ -1,24 +1,29 @@
-FROM ubuntu:20.04
+FROM alpine:3.14
 
-RUN apt-get update && \
-    apt-get install -y \
-    cron \
-    openssl \
-    iputils-ping \
+RUN apk update && \
+    apk add --no-cache \
     mariadb-client \
-    && rm -rf /var/lib/apt/lists/*
-
-RUN mkdir /exporter
-RUN mkdir -p /exporter/data /exporter/scripts /exporter/raw /exporter/logs
-
-COPY ./scripts/run.sh /exporter/scripts/run.sh
-COPY .env /exporter/.env
-
-RUN chmod +x /exporter/scripts/run.sh
-COPY cronjob /etc/cron.d/export-cron
-
-RUN chmod 0644 /etc/cron.d/export-cron
-RUN touch /var/log/cron.log
+    busybox \
+    openssl \
+    zstd \
+    go \
+    nano \
+    && rm -rf /var/cache/apk/*
 
 WORKDIR /exporter
-ENTRYPOINT printenv > /etc/environment && crontab /etc/cron.d/export-cron && cron -f
+
+RUN rm -rf /exporter/tmp && mkdir -p /exporter/tmp /exporter/data /exporter/logs
+
+COPY ./scripts /exporter
+COPY ./api/server.go /exporter/server.go
+COPY ./schedule.cron /exporter/schedule.cron
+
+RUN chmod +x /exporter/export.sh
+RUN chmod +x /exporter/decode.sh
+RUN chmod +x /exporter/start.sh
+RUN chmod +x /exporter/schedule.cron
+
+RUN crontab /exporter/schedule.cron
+RUN go build -o /exporter/healthserver /exporter/server.go
+
+CMD ["sh", "/exporter/start.sh"]
