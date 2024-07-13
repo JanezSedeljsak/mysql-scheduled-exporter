@@ -1,0 +1,26 @@
+services:
+  db_test:
+    image: 'mariadb:10-focal'
+    environment:
+        - MYSQL_ROOT_PASSWORD=test
+
+  exporter_test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - DB_HOST=db_test
+      - DB_USER=root
+      - DB_PASSWORD=test
+      - DB_NAME=sys
+      - SALT=salt
+    volumes:
+      - exporter-data-volume:/exporter/data/
+    ports:
+      - "5050:80"
+    depends_on:
+      - db_test
+    command: ["sh", "/exporter/test.sh"]
+
+volumes:
+  exporter-data-volume:

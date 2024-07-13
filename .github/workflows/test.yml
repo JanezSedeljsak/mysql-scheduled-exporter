@@ -1,0 +1,25 @@
+name: CI/CD Test
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run tests
+        run: |
+          echo "Doing testing..."
+          docker-compose -f docker-compose.ci.yml up
+          status=$?
+          if [ $status -ne 0 ]; then
+            echo "Tests failed"
+            exit 1
+          else
+            echo "Tests passed"
+          fi

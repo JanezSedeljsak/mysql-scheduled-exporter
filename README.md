@@ -30,7 +30,7 @@ services:
       - '/home/exports/:/exporter/data/' # host directory mapped for exported data
       - '/exporter/schedule.cron:/exporter/schedule.cron' # optional if you want to use custom schedule
     ports:
-      - '5050:80'
+      - '5050:80' # healthcheck server port
     depends_on:
       - db
 ```
